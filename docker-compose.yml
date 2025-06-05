@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  devpulse:
+    build: .
+    container_name: devpulse
+    ports:
+      - "8765:8765"
+    volumes:
+      - devpulse_data:/data
+      # Mount your local repos as read-only so the analyzer can reach them
+      - ${HOME}/projects:/repos:ro
+    environment:
+      - DEVPULSE_DB_PATH=/data/devpulse.db
+      - DEVPULSE_EXPORT_DIR=/data/exports
+      - DEVPULSE_WEB_HOST=0.0.0.0
+      - DEVPULSE_WEB_PORT=8765
+    restart: unless-stopped
+
+volumes:
+  devpulse_data:

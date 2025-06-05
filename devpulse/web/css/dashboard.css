@@ -1,0 +1,221 @@
+/* devpulse/web/css/dashboard.css
+   Dashboard-specific layout and view styles.
+   Also covers repos, sessions, and reports view styles. */
+
+/* ---------------------------------------------------------------------------
+   Dashboard
+--------------------------------------------------------------------------- */
+
+.view--dashboard {}
+
+.dashboard__section {
+    margin-bottom: var(--space-8);
+}
+
+.dashboard__heatmap-chart,
+.dashboard__line-chart {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    overflow-x: auto;
+}
+
+.dashboard__refresh {
+    margin-left: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Repos
+--------------------------------------------------------------------------- */
+
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-4);
+}
+
+.repo-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    cursor: pointer;
+    transition: border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.repo-card:hover {
+    border-color: var(--color-accent);
+    background: var(--color-bg-tertiary);
+}
+
+.repo-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+}
+
+.repo-card__name {
+    font-weight: 600;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.repo-card__path {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: var(--space-3);
+}
+
+.repo-card__stats {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2);
+}
+
+.repo-card__meta {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+}
+
+.repos__add-form {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+}
+
+/* ---------------------------------------------------------------------------
+   Repo detail
+--------------------------------------------------------------------------- */
+
+.repo-detail__commits-chart,
+.repo-detail__lang-chart,
+.repo-detail__authors-chart {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-5);
+    overflow-x: auto;
+}
+
+.repo-detail__tab-content {
+    animation: fadeIn 150ms ease;
+}
+
+.repo-detail__commits-table {
+    margin-top: var(--space-4);
+}
+
+/* ---------------------------------------------------------------------------
+   Sessions
+--------------------------------------------------------------------------- */
+
+.sessions__section {
+    margin-bottom: var(--space-6);
+}
+
+.sessions__daily-chart {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    overflow-x: auto;
+}
+
+.sessions__layout {
+    margin-top: var(--space-2);
+}
+
+.sessions__layout--split {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-5);
+    align-items: flex-start;
+}
+
+.sessions__detail-wrap {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    position: sticky;
+    top: calc(var(--topbar-height) + var(--space-4));
+}
+
+.sessions__detail h3 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+}
+
+.sessions__detail-actions {
+    margin-top: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Reports
+--------------------------------------------------------------------------- */
+
+.reports__section {
+    margin-bottom: var(--space-8);
+}
+
+.reports__export-row,
+.reports__repo-row {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.reports__export-row .label {
+    flex: 0 0 auto;
+}
+
+.reports__charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+}
+
+.reports__weekday-chart,
+.reports__hourly-chart,
+.reports__leaderboard-chart {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    overflow-x: auto;
+}
+
+@media (max-width: 700px) {
+    .reports__charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sessions__layout--split {
+        grid-template-columns: 1fr;
+    }
+}
