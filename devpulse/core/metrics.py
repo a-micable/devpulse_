@@ -348,6 +348,7 @@ class DuplicateDetector:
         self.repo_id = repo_id
         self.repo_path = repo_path
         self.conn = conn
+        self.config = config
         self.exclude = (
             config.exclude_patterns if config else
             [".git", "node_modules", "__pycache__", ".venv"]
@@ -383,7 +384,14 @@ class DuplicateDetector:
             return {"duplicates": [], "files_scanned": 0, "warning": "No code files found."}
 
         logger.info(f"Running duplicate detection on {len(code_files)} files...")
-        duplicates = FileAnalyzer.detect_duplicates(code_files, block_size)
+        duplicates = FileAnalyzer.detect_duplicates(
+            code_files,
+            block_size,
+            boilerplate_patterns=(
+                self.config.boilerplate_patterns
+                if self.config else []
+            ),
+        )
 
         # Make paths relative for output
         for group in duplicates:

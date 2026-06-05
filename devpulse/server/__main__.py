@@ -24,7 +24,7 @@ def main(argv=None) -> int:
 
     static_dir = config.get_str("server", "static_dir")
     if not static_dir:
-        package_root = os.path.dirname(__file__)
+        package_root = os.path.dirname(os.path.dirname(__file__))
         static_dir = os.path.join(package_root, "web")
 
     if os.path.isdir(static_dir):

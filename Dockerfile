@@ -38,6 +38,7 @@ RUN mkdir -p /data
 
 ENV DEVPULSE_DB_PATH=/data/devpulse.db \
     DEVPULSE_EXPORT_DIR=/data/exports \
+    DEVPULSE_STATIC_DIR=/app/devpulse/web \
     DEVPULSE_SERVER_HOST=0.0.0.0 \
     DEVPULSE_SERVER_PORT=8765 \
     PYTHONUNBUFFERED=1

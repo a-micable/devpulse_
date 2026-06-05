@@ -42,6 +42,7 @@ DEFAULTS: Dict[str, Dict[str, Any]] = {
         "max_file_size_kb": 500,
         "cache_ttl_hours": 24,
         "include_extensions": "",
+        "boilerplate_patterns": "^import |^from .* import|^#|^//|^/\\*|^<!--|^using |^require\\(|^package |^namespace |^include ",
     },
     "reporter": {
         "output_dir": os.path.expanduser("~/.devpulse/reports"),
@@ -259,6 +260,10 @@ class Config:
     @property
     def cache_ttl_hours(self) -> int:
         return self.get_int("analyzer", "cache_ttl_hours")
+
+    @property
+    def boilerplate_patterns(self) -> list:
+        return self.get_list("analyzer", "boilerplate_patterns")
 
     def ensure_data_dir(self) -> None:
         """Create the data directory if it doesn't exist."""

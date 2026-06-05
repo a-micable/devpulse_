@@ -662,8 +662,37 @@ class FileAnalyzer:
         return results
 
     @classmethod
+    def _is_boilerplate_block(cls, lines: List[str],
+                              patterns: Optional[List[str]] = None) -> bool:
+        """
+        Return True for blocks that are mostly boilerplate setup or repeated
+        starter code, such as imports, headers, license comments, or other
+        repeated scaffolding that should not count as meaningful duplicate code.
+        """
+        stripped = [line.strip() for line in lines if line.strip()]
+        if not stripped:
+            return True
+
+        boilerplate_re = re.compile(
+            r'^(#|//|/\*|<!--|import\b|from\b.*\bimport\b|using\b|require\(|package\b|namespace\b|include\b)'
+        )
+        compiled = [re.compile(p) for p in (patterns or []) if p]
+
+        boilerplate_lines = 0
+        for line in stripped:
+            if boilerplate_re.match(line):
+                boilerplate_lines += 1
+                continue
+            if any(pattern.search(line) for pattern in compiled):
+                boilerplate_lines += 1
+                continue
+
+        return (boilerplate_lines / len(stripped)) >= 0.75
+
+    @classmethod
     def detect_duplicates(cls, file_paths: List[str],
-                          block_size: int = 6) -> List[Dict]:
+                          block_size: int = 6,
+                          boilerplate_patterns: Optional[List[str]] = None) -> List[Dict]:
         """
         Detect duplicate code blocks using a rolling hash approach.
         Splits each file into chunks of block_size lines,
@@ -688,7 +717,11 @@ class FileAnalyzer:
             )]
 
             for i in range(len(code_lines) - block_size + 1):
-                block = "\n".join(code_lines[i:i + block_size])
+                block_lines = code_lines[i:i + block_size]
+                if cls._is_boilerplate_block(block_lines, boilerplate_patterns):
+                    continue
+
+                block = "\n".join(block_lines)
                 # Skip trivially short or brace-only blocks
                 if len(block.strip()) < 40:
                     continue
