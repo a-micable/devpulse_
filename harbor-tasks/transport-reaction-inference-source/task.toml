@@ -31,7 +31,7 @@ timeout_sec = 900.0
 environment_mode = "separate"
 
 [verifier.environment]
-network_mode = "no-network"
+network_mode = "public"
 
 [environment]
 network_mode = "public"
